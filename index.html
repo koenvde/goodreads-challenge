@@ -8,108 +8,19 @@
         <svg width="1000" height="800"></svg>
 
         <script>
-		
 			var svg = d3.select("svg"),
 				margin = 50,
 				width = svg.attr("width") - 2*margin,
-				height = svg.attr("height") - 2*margin,
-				gap = width/74,
-				maxLength = 9780;
+				height = svg.attr("height") - 2*margin;
 				
 			var g = svg.append("g")
 					.attr("transform", "translate(" + margin + "," + margin + ")");
-				
-            d3.csv("https://baryon.be/sandbox/jamesbond/20220602-bond-d3-movies.csv", function(data2) {
-                for (var i = 0; i < data2.length; i++) {
-                    console.log(data2[i].movieDuration);
-                }
-				
-			g.selectAll(".rect2")
-				.data(data2)
-				.enter().append("rect")
-				.attr("class", "rect2")
-				.attr("x", function(d) { return 3*gap*(d.movie-1); })
-				.attr("y", function(d) { return height - d.movieDuration/maxLength*height; })
-				.attr("width", 2*gap)
-				.attr("height", function(d) { return d.movieDuration/maxLength*height; })
-				.attr("fill", "#ddd")
-			});
-				
-			d3.csv("https://baryon.be/sandbox/jamesbond/20220602-bond-d3.csv", function(data) {
-                for (var i = 0; i < data.length; i++) {
-                    console.log(data[i].momentID);
-					console.log(data[i].momentDuration);
-                }
-				
-			g.selectAll(".bar")
-				.data(data)
-				.enter().append("rect")
-				.attr("class", "bar")
-				.attr("x", function(d) { return 3*gap*(d.movie-1); })
-				.attr("y", function(d) { return height - d.momentDuration/maxLength*height - d.momentIn/maxLength*height; })
-				.attr("width", 2*gap)
-				.attr("height", function(d) { return d.momentDuration/maxLength*height; })
-				.attr("fill", function(d) { 
-					switch(d.momentVehicle){
-						case "airplane": return "#d06c4b"; break;
-						case "animal": return "#d7de80"; break;
-						case "balloon": return "#f7ad6a"; break;
-						case "boat": return "#5584ba"; break;
-						case "bus": return "#516326"; break;
-						case "cable car": return "#3e5335"; break;
-						case "car": return "#60792c"; break;
-						case "cello case": return "#bac047"; break;
-						case "ferris wheel": return "#3e5335"; break;
-						case "helicopter": return "#ea935a"; break;
-						case "hovercraft": return "#235b96"; break;
-						case "jetpack": return "#faca8a"; break;
-						case "life raft": return "#7ba1d5"; break;
-						case "motorcycle": return "#859834"; break;
-						case "parachute": return "#faca8a"; break;
-						case "paraglider": return "#faca8a"; break;
-						case "rickshaw": return "#859834"; break;
-						case "skis": return "#bac047"; break;
-						case "skyhook": return "#faca8a"; break;
-						case "sleigh": return "#bac047"; break;
-						case "snowmobile": return "#bac047"; break;
-						case "space shuttle": return "#85423d"; break;
-						case "space station": return "#a3533f"; break;
-						case "submarine": return "#124376"; break;
-						case "surfboard": return "#9fbed6"; break;
-						case "tank": return "#343f23"; break;
-						case "train": return "#516326"; break;
-						case "tram": return "#516326"; break;
-						case "truck": return "#343f23"; break;
-						case "wetbike": return "#9fbed6"; break;
-						default: return "black";
-					} });
-            });
-			
-			d3.select("#download")
-				.on("mouseover", writeDownloadLink);
 
-			function writeDownloadLink(){
-				var html = d3.select("svg")
-					.attr("title", "svg_title")
-					.attr("version", 1.1)
-					.attr("xmlns", "http://www.w3.org/2000/svg")
-					.node().parentNode.innerHTML;
-				
-				d3.select(this)
-					.attr("href-lang", "image/svg+xml")
-					.attr("href", "data:image/svg+xml;base64,\n" + btoa(html))
-					.on("mousedown", function(){
-						if(event.button != 2){
-							d3.select(this)
-								.attr("href", null)
-								.html("Use right click");
-						}
-					})
-					.on("mouseout", function(){
-						d3.select(this)
-							.html("Download");
-					});
-			};
+            d3.csv("data/goodreads.csv", function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i].Title);
+                }
+            });
         </script>
     </body>
 </html>
